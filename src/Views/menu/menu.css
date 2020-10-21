@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+}
+
+.menu {
+    margin: 1rem;
+    min-height: 200px;
+    height: 95%;
+    background: gainsboro;
+    border: solid .4rem lightslategrey;
+    border-radius: .4em;
+    box-shadow: black .5rem .4rem 1rem .6rem;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
