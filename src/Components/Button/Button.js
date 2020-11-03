@@ -7,11 +7,11 @@ export default function Button(props) {
             style={props.shadow} 
             className="button" 
             onClick={() => {
-                props.setGreeting("Hope your day is going great!!!");
+                props.setGreeting();
                 }
             }
             >
-        {props.text}
+        {props.greeting}
         </div>
     )
 }

@@ -1,0 +1,7 @@
+body {
+    margin: 0;
+}
+
+.greeting-container {
+    border: solid 1px black;
+}

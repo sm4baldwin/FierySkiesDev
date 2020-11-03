@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+}
+
+.container {
+    margin: 3rem auto;
+    align-self: center;
+    height: 95%;
+    max-width: 50%;
+    background: gainsboro;
+    border: solid .1rem rgb(18, 19, 20);
+    border-radius: .2em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.greeting {
+    border-bottom: solid .05rem black;
+    padding: .5rem 1rem;
+}

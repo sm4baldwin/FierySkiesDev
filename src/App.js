@@ -1,15 +1,15 @@
-import React from 'react';
-import './App.css';
-import Mat from './Views/gameMat/Mat'
-import Menu from './Views/menu/menu'
+import React from 'react'
+import './App.css'
+
+import Greetings from './Views/Greetings/Greetings'
+import firebase from './Services/firebase'
 
 function App() {
   return (
     <div className="App">
-
-      <Menu />
+      <Greetings firebase={firebase} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
