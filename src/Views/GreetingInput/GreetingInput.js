@@ -23,14 +23,18 @@ export default function GreetingInput(props) {
     }
 
     const randomizeGreeting = () => {
-        
         const randGreeting = (parentGreetings) => {
             const randInt = Math.floor(Math.random() * Math.floor(parentGreetings.length))
             return parentGreetings[randInt].newGreeting
         }
-        let randomGreeting = randGreeting(props.parentGreetings)
-        while (randomGreeting === greeting) {
+        let randomGreeting
+        if (props.parentGreetings.length > 1) {
             randomGreeting = randGreeting(props.parentGreetings)
+            while (randomGreeting === greeting) {
+                randomGreeting = randGreeting(props.parentGreetings)
+            }
+        } else {
+            randomGreeting = "I need to add some more encouragements!"
         }
         setGreeting(randomGreeting)
     }

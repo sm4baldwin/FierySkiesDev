@@ -1,5 +1,5 @@
 .button {
-    border: .5em red solid;
+    border: .2em rgb(230, 154, 154) solid;
     background-color: rgb(244, 248, 244);
     border-radius: .5em;
     align-content: center;
@@ -9,9 +9,9 @@
 
 .button:hover, .button:focus {
     cursor: pointer;
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(77, 74, 74);
     color: whitesmoke;
-    border: .5em rgb(161, 1, 1) solid;
-    box-shadow: rgb(58, 58, 58) .3em .3em;
+    border: .2em rgb(156, 57, 57) solid;
+    box-shadow: rgb(102, 99, 99) .2em .2em;
 
 }

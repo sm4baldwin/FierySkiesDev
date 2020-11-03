@@ -3,9 +3,9 @@ import './GreetingList.css'
 
 
 export default function GreetingList(props) {
-    console.log(props.parentGreetings)
     return (
         <div className="container">
+            <div className='greeting-list-title'><em>Emily, hope you are doing well!</em></div>
             {props.parentGreetings.map((item, id) => {
                 return (
                     <div className='greeting' key={id}>
