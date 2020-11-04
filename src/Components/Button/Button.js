@@ -3,15 +3,14 @@ import './Button.css';
 
 export default function Button(props) {
     return (
-        <div 
-            style={props.shadow} 
+        <button 
             className="button" 
             onClick={() => {
-                props.setGreeting();
+                props.onClickParam ? props.onClick(props.onClickParam) : props.onClick()
                 }
             }
-            >
-        {props.greeting}
-        </div>
+        >
+            {props.text}
+        </button>
     )
 }

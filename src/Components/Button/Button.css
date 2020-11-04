@@ -2,12 +2,14 @@
     border: .2em rgb(230, 154, 154) solid;
     background-color: rgb(244, 248, 244);
     border-radius: .5em;
-    align-content: center;
     padding: .5em .5em;
     box-shadow: grey .1em .1em;
+    max-width: 15vw;
+    align-self: center;
+    margin: 1rem 1rem;
 }
 
-.button:hover, .button:focus {
+.button:hover {
     cursor: pointer;
     background-color: rgb(77, 74, 74);
     color: whitesmoke;

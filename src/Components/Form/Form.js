@@ -1,11 +1,12 @@
 import React from 'react'
 import './Form.css'
+import Button from '../Button/Button'
 
-export const Form = (props) => {
+export default (props) => {
     return (
-        <div >
+        <div className="form">
             <input className='form-input' type="text" onChange={props.handleOnChange} value={props.value} />
-            <button className='form-button' onClick={props.createGreeting}>Add a new greeting!</button>
+            <Button onClick={props.submitForm} text={props.formButtonPrompt} />
         </div>
     )
 }

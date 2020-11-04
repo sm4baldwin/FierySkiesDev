@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import GreetingList from '../GreetingList/GreetingList'
-import GreetingInput from '../GreetingInput/GreetingInput'
+import GreetingList from './GreetingList/GreetingList'
+import GreetingInput from './GreetingInput/GreetingInput'
 import './Greetings.css'
 
 export default function Greetings(props) {
-    const [parentGreetings, setParentGreetings] = useState([{id: 1, newGreeting: 'Hello Emily!'}])
+    const [parentGreetings, setParentGreetings] = useState([{id: 1, newGreeting: ''}])
 
     useEffect(() => {
         const todoRef = props.firebase.database().ref('Greeting')
@@ -21,7 +21,7 @@ export default function Greetings(props) {
     return (
         <div className="greeting-container">
             <GreetingInput firebase={props.firebase} parentGreetings={parentGreetings}/>
-            <GreetingList parentGreetings={parentGreetings}/>
+            <GreetingList firebase= {props.firebase} parentGreetings={parentGreetings}/>
 
         </div>
     )
