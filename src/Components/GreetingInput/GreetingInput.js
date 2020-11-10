@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './GreetingInput.css'
-import Button from '../../../Components/Button/Button'
-import Form from '../../../Components/Form/Form'
+import Button from '../Button/Button'
+import Form from '../Form/Form'
 
 
 export default function GreetingInput(props) {

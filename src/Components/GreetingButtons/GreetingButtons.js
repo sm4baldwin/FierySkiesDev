@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import Button from '../../../Components/Button/Button'
-import Form from '../../../Components/Form/Form'
+import Button from '../Button/Button'
+import Form from '../Form/Form'
 import './GreetingButtons.css'
 
 export const UpdateGreeting = (props) => {

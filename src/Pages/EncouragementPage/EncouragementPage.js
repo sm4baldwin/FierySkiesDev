@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import GreetingList from './GreetingList/GreetingList'
-import GreetingInput from './GreetingInput/GreetingInput'
-import './Greetings.css'
 
-export default function Greetings(props) {
+import GreetingList from '../../Components/GreetingList/GreetingList'
+import GreetingInput from '../../Components/GreetingInput/GreetingInput'
+
+export default function EncouragementPage(props) {
     const [parentGreetings, setParentGreetings] = useState([{id: 1, newGreeting: ''}])
 
     useEffect(() => {

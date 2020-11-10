@@ -4,7 +4,7 @@
     border-radius: .5em;
     padding: .5em .5em;
     box-shadow: grey .1em .1em;
-    max-width: 15vw;
+    /* max-width: 15vw; */
     align-self: center;
     margin: 1rem 1rem;
 }
@@ -15,5 +15,4 @@
     color: whitesmoke;
     border: .2em rgb(156, 57, 57) solid;
     box-shadow: rgb(102, 99, 99) .2em .2em;
-
 }
