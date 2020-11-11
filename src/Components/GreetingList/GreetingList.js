@@ -2,7 +2,6 @@ import React from 'react'
 import './GreetingList.css'
 import { UpdateGreeting, DeleteGreeting, AddResponse } from '../GreetingButtons/GreetingButtons'
 
-
 export default function GreetingList(props) {
 
     return (

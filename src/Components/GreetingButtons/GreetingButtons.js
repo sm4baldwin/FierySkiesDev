@@ -1,12 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import Button from '../Button/Button'
 import Form from '../Form/Form'
 import './GreetingButtons.css'
+import {DBContext} from '../../Contexts/FirebaseContext'
 
 export const UpdateGreeting = (props) => {
-    
+    const db = useContext(DBContext)
+
     const markRead = (id) => {
-        props.firebase.database().ref('Greeting').child(id).update({
+        db.ref('Greeting').child(id).update({
             read: true
         })
     }
@@ -20,10 +22,11 @@ export const UpdateGreeting = (props) => {
 }
 
 export const DeleteGreeting = (props) => {
-    
+    const db = useContext(DBContext)
+
     const deleteGreeting = (id) => {
         if (window.confirm("Are you sure you want to delete?")) {
-            props.firebase.database().ref('Greeting').child(id).remove()
+            db.ref('Greeting').child(id).remove()
         }
       };
     
@@ -38,13 +41,14 @@ export const DeleteGreeting = (props) => {
 
 export const AddResponse = (props) => {
     const [response, setResponse] = useState('')
+    const db = useContext(DBContext)
 
     const handleOnFormChange = (e) => {
         setResponse(e.target.value)
     }
 
     const submitForm = () => {
-        const ref = props.firebase.database().ref('Greeting').child(props.itemID);
+        const ref = db.ref('Greeting').child(props.itemID);
         ref.update({
             response: response
         })

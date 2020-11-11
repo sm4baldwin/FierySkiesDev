@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import './GreetingInput.css'
 import Button from '../Button/Button'
 import Form from '../Form/Form'
-
+import {DBContext} from '../../Contexts/FirebaseContext'
 
 export default function GreetingInput(props) {
     const [greeting, setGreeting] = useState("Hello! If you need encouragement, click the button above or read through the list below!")
@@ -10,13 +10,14 @@ export default function GreetingInput(props) {
     const [newGreeting, setNewGreeting] = useState('')
     const promptList = ['Click again!', 'Want some more?', `Isn't this so fun?!`, 'Click me! Click me!',
                         'I can do this all day', 'Want something uplifting?']
+    const db = useContext(DBContext)
 
     const handleOnFormChange = (e) => {
         setNewGreeting(e.target.value)
     }
     
     const submitForm = () => {
-            const ref = props.firebase.database().ref('Greeting');
+            const ref = db.ref('Greeting');
             const newGreetingInput = {
               newGreeting,
               read: false,
