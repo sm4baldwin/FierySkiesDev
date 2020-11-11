@@ -4,6 +4,10 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import FormControl from '@material-ui/core/FormControl'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import {useTheme, makeStyles} from '@material-ui/core/styles'
@@ -17,14 +21,21 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         background: theme.palette.paper,
         borderRadius: '1em',
+        padding: '1em'
     },
     gridItem: {
         width:'100%',
+        marginBottom: '1em'
         
     },
     listItem: {
-        border: '.2em solid ' + theme.palette.grey[600],
         padding: '1em',
+    },
+    buttonFocus: {
+        backgroundColor: theme.palette.primary.dark
+    },
+    encouragement: {
+        textTransform: 'capitalize'
     }
   }));
 
@@ -49,7 +60,7 @@ export function EncourageTemplate(props) {
                 <Paper
                     elevation={5}
                     className={classes.paper}
-                    style={{border: '.2em solid ' + theme.palette.grey[600]}}>
+                >
 
                     <Grid
                         container
@@ -62,17 +73,47 @@ export function EncourageTemplate(props) {
                             <Button
                                 variant='contained'
                                 color='primary'
+                                disableRipple={true}
+                                focusVisibleClassName={classes.buttonFocus}
                                 size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    props.randomizeEncouragement()}
+                                }
                                 >
-                                Placeholder
+                                {props.prompt}
                             </Button>
                         </Grid>
                         {/* Encouragement Text */}
-                        <Grid item>
-                            <Paper style={{border: 'solid 1px green'}}>
-                                Encouragement Text
-                            </Paper>
+                        <Grid item style={{padding: '1em'}}>
+                            <Typography variant='h4' className={classes.encouragement}>
+                                {props.encouragement}
+                            </Typography>
                             {/* Adding a form in a minute */}
+                        </Grid>
+                        <Grid item style={{padding: '1em'}}>
+                            <form onSubmit={props.submitNewGreeting}>
+                                <FormControl >
+                                    <InputLabel htmlFor="my-input">New Encouragement</InputLabel>
+                                    <Input 
+                                        id="my-input" 
+                                        aria-describedby="my-helper-text" 
+                                        onChange={props.handleOnFormChange}
+                                        value={props.newGreeting}/>
+                                    <Button
+                                        variant='outlined'
+                                        color='default'
+                                        disableRipple={true}
+                                        focusVisibleClassName={classes.buttonFocus}
+                                        size='small'
+                                        type='submit'
+                                        style={{marginTop: '.5em'}}
+                                    >
+                                        {props.newGreetingPrompt}
+                                    </Button>
+                                    <FormHelperText id="my-helper-text">Because kindness is even more contagious</FormHelperText>
+                                </FormControl>
+                            </form>
                         </Grid>
                     </Grid>
                 </Paper>
@@ -94,42 +135,82 @@ export function EncourageTemplate(props) {
                             direction={smallMedia ? 'column' : 'row'}
                             justify='space-between'
                             wrap='nowrap'
-                            alignItems='center'
+                            alignItems={smallMedia ? 'flex-start' : 'center'}
                             className={classes.listItem}
-                            style={
-                                i === 0 ? {
-                                    borderRadius: '1em 1em 0 0',
-                                    borderBottom: 'none'
-                                } : 
-                                i === array.length - 1 ? 
-                                {
-                                    borderBottom: '.2em solid ' + theme.palette.grey[600],
-                                    borderRadius: '0 0 1em 1em'
-                                }
-                                : {
-                                    borderBottom: 'none'
-                                }
+                            style={i === 0 ? {borderRadius: '1em 1em 0 0',} : 
+                                i === array.length - 1 ? {borderRadius: '0 0 1em 1em'} : {}
                             }
                             key={i}
                         >
                             <Grid item>
                                 <Typography align='left' variant='body1' style={{margin: '0 1em 0 0'}}>
-                                    [Greeting]: {item.newGreeting}
+                                    <strong style={{color: theme.palette.secondary.main}}>[Greeting]:</strong> {item.newGreeting}
                                 </Typography>
                                 {item.response && <Typography align='left' variant='body1' style={{margin: '0 1em 0 0'}}>
-                                    [Response]: {item.response}
+                                    <strong style={{color: theme.palette.secondary.main}}>[Response]:</strong> {item.response}
                                 </Typography>}
                             </Grid>
-                            <Grid item style={{minWidth: '9rem'}}>
-                                <Button
+                            <Grid item style={smallMedia ? {margin: '0 auto'} : {minWidth: '11rem'}}>
+                                {!item.read && <Button
                                     variant='contained'
-                                    color='primary'
+                                    color='default'
+                                    disableRipple={true}
+                                    focusVisibleClassName={classes.buttonFocus}
                                     size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
                                     style={{float: 'right'}}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        props.markRead(item.id)
+                                    }}
                                 >
                                     <Typography variant='button' align='center'>Mark as Read?
                                     </Typography>
-                                </Button>
+                                </Button>}
+                                {item.read && !item.response && <Button
+                                    variant='contained'
+                                    color='secondary'
+                                    disableRipple={true}
+                                    focusVisibleClassName={classes.buttonFocus}
+                                    size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
+                                    style={{float: 'right'}}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        props.markRead(item.id)
+                                    }}
+                                >
+                                    <Typography variant='button' align='center'>Add Response
+                                    </Typography>
+                                </Button>}
+                                {item.response && <Button
+                                variant='contained'
+                                color='secondary'
+                                disableRipple={true}
+                                focusVisibleClassName={classes.buttonFocus}
+                                size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
+                                style={{float: 'right'}}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    props.markRead(item.id)
+                                }}
+                            >
+                                <Typography variant='button' align='center'>Update Response
+                                </Typography>
+                            </Button>}
+                            {item.read && <Button
+                                    variant='contained'
+                                    color='default'
+                                    disableRipple={true}
+                                    focusVisibleClassName={classes.buttonFocus}
+                                    size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
+                                    style={!smallMedia ? {float: 'right'} : {}}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        props.deleteGreeting(item.id)
+                                    }}
+                                >
+                                    <Typography variant='button' align='center'>Delete
+                                    </Typography>
+                                </Button>}
                             </Grid>
                         </Grid>
                         ))}
