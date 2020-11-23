@@ -18,6 +18,7 @@ export default function EncouragementPage(props) {
     'Want something uplifting?'
   ]
   const db = useContext(DBContext)
+  const [response, setResponse] = useState('')
 
   useEffect(() => {
     const dbRef = db.ref('Greeting')
@@ -81,6 +82,18 @@ export default function EncouragementPage(props) {
     }
   }
 
+  const submitResponse = () => {
+    const ref = db.ref('Greeting').child(props.itemID);
+    ref.update({
+        response: response
+    })
+    setResponse('')
+  }
+
+  const handleOnResponseChange = (e) => {
+    setResponse(e.target.value)
+  }
+
   return (
     <EncourageTemplate 
       greetings={greetings}
@@ -93,6 +106,9 @@ export default function EncouragementPage(props) {
       randomizeEncouragement={randomizeEncouragement}
       markRead={markRead}
       deleteGreeting={deleteGreeting}
+      response={response}
+      submitResponse={submitResponse}
+      handleResponseChange={handleOnResponseChange}
     />
   )
     

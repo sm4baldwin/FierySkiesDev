@@ -89,8 +89,8 @@ export function EncourageTemplate(props) {
                             <Typography variant='h4' className={classes.encouragement}>
                                 {props.encouragement}
                             </Typography>
-                            {/* Adding a form in a minute */}
                         </Grid>
+                        {/* New response form */}
                         <Grid item style={{padding: '1em'}}>
                             <form onSubmit={props.submitNewGreeting}>
                                 <FormControl >
@@ -102,7 +102,7 @@ export function EncourageTemplate(props) {
                                         value={props.newGreeting}/>
                                     <Button
                                         variant='outlined'
-                                        color='default'
+                                        color='secondary'
                                         disableRipple={true}
                                         focusVisibleClassName={classes.buttonFocus}
                                         size='small'
@@ -150,58 +150,50 @@ export function EncourageTemplate(props) {
                                     <strong style={{color: theme.palette.secondary.main}}>[Response]:</strong> {item.response}
                                 </Typography>}
                             </Grid>
-                            <Grid item style={smallMedia ? {margin: '0 auto'} : {minWidth: '11rem'}}>
+                            <Grid item style={smallMedia ? {margin: '0 auto'} : {minWidth: '11rem',}}>
                                 {!item.read && <Button
                                     variant='contained'
                                     color='default'
                                     disableRipple={true}
                                     focusVisibleClassName={classes.buttonFocus}
-                                    size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
-                                    style={{float: 'right'}}
+                                    size='small'
+                                    // style={{float: 'right'}}
                                     onClick={(e) => {
                                         e.preventDefault()
                                         props.markRead(item.id)
                                     }}
                                 >
-                                    <Typography variant='button' align='center'>Mark as Read?
+                                    <Typography variant='button' align='center'>Mark as Read
                                     </Typography>
                                 </Button>}
-                                {item.read && !item.response && <Button
-                                    variant='contained'
-                                    color='secondary'
-                                    disableRipple={true}
-                                    focusVisibleClassName={classes.buttonFocus}
-                                    size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
-                                    style={{float: 'right'}}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        props.markRead(item.id)
-                                    }}
-                                >
-                                    <Typography variant='button' align='center'>Add Response
-                                    </Typography>
-                                </Button>}
-                                {item.response && <Button
-                                variant='contained'
-                                color='secondary'
-                                disableRipple={true}
-                                focusVisibleClassName={classes.buttonFocus}
-                                size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
-                                style={{float: 'right'}}
-                                onClick={(e) => {
-                                    e.preventDefault()
-                                    props.markRead(item.id)
-                                }}
-                            >
-                                <Typography variant='button' align='center'>Update Response
-                                </Typography>
-                            </Button>}
-                            {item.read && <Button
-                                    variant='contained'
+                            {item.read && <form onSubmit={props.submitResponse}>
+                            <FormControl >
+                                <InputLabel htmlFor="response">Response:
+                                </InputLabel>
+                                <Input 
+                                    id="response" 
+                                    onChange={props.handleResponseChange}
+                                    value={props.response}/>
+                                <Button
+                                    variant='outlined'
                                     color='default'
                                     disableRipple={true}
                                     focusVisibleClassName={classes.buttonFocus}
-                                    size={smallMedia ? 'small' : mediumMedia ? 'medium' : 'large'}
+                                    size='small'
+                                    type='submit'
+                                    style={{marginTop: '.5em'}}
+                                >
+                                    {item.response ? 'Update' : 'Respond'}
+                                </Button>
+                            </FormControl>
+                            </form>
+                            }
+                            {item.read && <Button
+                                    variant='text'
+                                    color='default'
+                                    disableRipple={true}
+                                    focusVisibleClassName={classes.buttonFocus}
+                                    size='small'
                                     style={!smallMedia ? {float: 'right'} : {}}
                                     onClick={(e) => {
                                         e.preventDefault()

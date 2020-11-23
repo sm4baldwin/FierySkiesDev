@@ -2,6 +2,8 @@ import React from 'react'
 import {Link as RouterLink, Switch, Route} from 'react-router-dom'
 import './App.css'
 
+import MenuBar from './Components/Organisms/MenuBar'
+
 import EncouragementPage from './Pages/EncouragementPage/EncouragementPage'
 import {HomePage} from './Pages/Home/Home'
 
@@ -20,6 +22,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <DBContextProvider>
+        <MenuBar />
         <main className='App'>
           {/* <nav>
             <ul>
@@ -37,6 +40,7 @@ function App() {
               </li> }
             </ul>
           </nav> */}
+
           <Switch>
             <Route path='/Encouragement/'>
               <EncouragementPage />
