@@ -1,11 +1,11 @@
 import React from 'react'
-import {Link as RouterLink, Switch, Route} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 import './App.css'
 
 import MenuBar from './Components/Organisms/MenuBar'
 
-import EncouragementPage from './Pages/EncouragementPage/EncouragementPage'
-import {HomePage} from './Pages/Home/Home'
+import EncouragementPage from './Pages/EncouragementPage'
+import HomePage from './Pages/Home'
 
 import {DBContextProvider} from './Contexts/FirebaseContext'
 
@@ -21,36 +21,19 @@ const pages = [
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <DBContextProvider>
-        <MenuBar />
-        <main className='App'>
-          {/* <nav>
-            <ul>
-              <li>
-                <RouterLink to="/Encouragement">Encouragement App</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/" exact>Home</RouterLink>
-              </li>
-              {/* <li>
-                <Link to="/category">Category</Link>
-              </li>
-              <li>
-                <Link to="/products">Products</Link>
-              </li> }
-            </ul>
-          </nav> */}
-
-          <Switch>
-            <Route path='/Encouragement/'>
+      <MenuBar />
+      <main className='App'>
+        <Switch>
+          <Route path='/Encouragement/'>
+            <DBContextProvider>
               <EncouragementPage />
-            </Route>
-            <Route path='/' exact>
-              <HomePage pages={pages}/>
-            </Route>
-          </Switch>
-        </main>
-      </DBContextProvider>
+            </DBContextProvider>
+          </Route>
+          <Route path='/' exact>
+            <HomePage pages={pages}/>
+          </Route>
+        </Switch>
+      </main>
     </ThemeProvider>
   )
 }

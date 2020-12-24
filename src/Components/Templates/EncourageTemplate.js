@@ -9,6 +9,8 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
+import ControlledForm from '../Organisms/ControlledForm'
+
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import {useTheme, makeStyles} from '@material-ui/core/styles'
 
@@ -166,27 +168,15 @@ export function EncourageTemplate(props) {
                                     <Typography variant='button' align='center'>Mark as Read
                                     </Typography>
                                 </Button>}
-                            {item.read && <form onSubmit={props.submitResponse}>
-                            <FormControl >
-                                <InputLabel htmlFor="response">Response:
-                                </InputLabel>
-                                <Input 
-                                    id="response" 
-                                    onChange={props.handleResponseChange}
-                                    value={props.response}/>
-                                <Button
-                                    variant='outlined'
-                                    color='default'
-                                    disableRipple={true}
-                                    focusVisibleClassName={classes.buttonFocus}
-                                    size='small'
-                                    type='submit'
-                                    style={{marginTop: '.5em'}}
-                                >
-                                    {item.response ? 'Update' : 'Respond'}
-                                </Button>
-                            </FormControl>
-                            </form>
+                            {item.read && <ControlledForm
+                                onSubmit={(value) => {
+                                    props.submitResponse(item.id, value)}}
+                                inputLabel='Response:'
+                                htmlFor='response'
+                                inputID='response'
+                                buttonLabel={item.response ? 'Update' : 'Respond'}
+                                focusVisibleClassName={classes.buttonFocus}
+                            />
                             }
                             {item.read && <Button
                                     variant='text'

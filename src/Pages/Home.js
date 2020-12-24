@@ -1,7 +1,7 @@
 import React from 'react'
-import {Home} from '../../Components/Templates/HomeTemplate'
+import {Home} from '../Components/Templates/HomeTemplate'
 
-export const HomePage = (props) => {
+export default (props) => {
     return (
             <Home pages={props.pages} prompt={'Please select an App'} />
     )
