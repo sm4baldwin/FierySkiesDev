@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+gunicorn = "==20.0.4"
+flask = "*"
 
 [requires]
 python_version = "3.9"
