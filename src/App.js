@@ -4,6 +4,7 @@ import './App.css'
 
 import MenuBar from './Components/Organisms/MenuBar'
 
+import FierySkies from './Pages/FierySkies'
 import EncouragementPage from './Pages/EncouragementPage'
 import HomePage from './Pages/Home'
 
@@ -15,7 +16,8 @@ import {theme} from './Contexts/ThemeContext'
 
 const pages = [
   {title: 'Home', url: '/'},
-  {title: 'Encouragement', url: '/Encouragement/'}
+  {title: 'FierySkies', url: '/FierySkies/'},
+  {title: 'Encouragement', url: '/Encouragement/'},
 ]
 
 function App() {
@@ -27,6 +29,11 @@ function App() {
           <Route path='/Encouragement/'>
             <DBContextProvider>
               <EncouragementPage />
+            </DBContextProvider>
+          </Route>
+          <Route path='/FierySkies/'>
+            <DBContextProvider>
+              <FierySkies />
             </DBContextProvider>
           </Route>
           <Route path='/' exact>
