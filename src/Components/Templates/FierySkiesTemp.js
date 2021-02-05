@@ -3,20 +3,32 @@ import {Stage, Layer, Text, Sprite, Group} from 'react-konva'
 
 export default function FierySkiesTemplate(props) {
     return (
-        <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Stage width={1300} height={700}>
             <Layer>
-                <Text  text="This is my first canvas layer"/>
+                <Text 
+                    text={'[x: ' + props.wizardState.location.x + ', y: ' + props.wizardState.location.y + ']'}
+                    x={props.wizardState.location.x - 25}
+                    y={props.wizardState.location.y - 10}
+                />
                 <Group>
                     <Sprite
                         ref={props.wizardRef}
-                        image={props.wizard.image}
-                        animation={props.wizard.animation}
-                        frameRate={2}
+                        image={props.wizardState.image}
+                        animation={props.wizardState.animation}
+                        frameRate={10}
                         frameIndex={0}
-                        animations={props.wizard.animations}
-                        x={props.wizard.location[0]}
-                        y={props.wizard.location[1]}
-
+                        animations={props.wizardState.animations}
+                        x={props.wizardState.location.x}
+                        y={props.wizardState.location.y}
+                        scaleX={props.wizardState.dragging ? .75: 0.5}
+                        scaleY={props.wizardState.dragging ? .75: 0.5}
+                        draggable={true}
+                        onDragStart={() => {
+                            props.updateWizard('dragging')
+                        }}
+                        onDragEnd={e => {
+                            props.updateWizard('dropping', e.target.x(), e.target.y())
+                        }}
                     />
                 </Group>
             </Layer>

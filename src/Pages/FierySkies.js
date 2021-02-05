@@ -9,32 +9,47 @@ import { Characters } from '../Assets/Characters'
 function FierySkies(props) {
 
     let [wizardState, setWizardState] = useState(Characters.Wizard)
-    let [refReady, setRefReady] = useState(false)
     const wizardRef = useRef(null)
     
+    const updateWizard = (dragging, x=null, y=null) => {
+        if (dragging==='dragging') {
+            setWizardState({...wizardState,
+                dragging: true
+            })
+        } else {
+            setWizardState({...wizardState,
+                location: {
+                    x: x,
+                    y: y
+                },
+                dragging: false
+            })
+        }
+    }
+
     useEffect(() => {
-        // const wizardImage = new window.Image()
-        // wizardImage.src = wizardState.image_import
-        // wizardImage.onload = () => {
-        //     setWizardState({...wizardState, image: wizardImage})
-        //     setRefReady(true)
-        // }
-        // if (refReady) {
-        //     wizardRef.current.start()
-        // }
-        console.log(wizardRef)
-        }, [])
+        if (wizardRef.current) {
+            wizardRef.current.start()
+        }
+        }, [wizardRef])
+
+    useEffect(() => {
+        const wizardImage = new window.Image()
+        wizardImage.src = Characters.Wizard.image_import
+        wizardImage.onload = () => {
+            setWizardState({...wizardState, image: wizardImage})
+        }
+    })
+    
 
     return (
         <div>
-            <div style={{margin: '1rem'}}>
-
-            </div>
-            {refReady && <FierySkiesTemplate 
-                wizard={wizardState}
+            <FierySkiesTemplate 
+                wizardState={wizardState}
+                updateWizard={updateWizard}
                 wizardRef={wizardRef}
             
-            />}
+            />
         </div>
     )
 }
