@@ -23,7 +23,7 @@ const pages = [
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <MenuBar />
+      {/* <MenuBar /> */}
       <main className='App'>
         <Switch>
           <Route path='/Encouragement/'>
