@@ -4,50 +4,38 @@ import useImage from 'use-image'
 import FierySkiesTemplate from '../Components/Templates/FierySkiesTemp'
 
 import { Characters } from '../Assets/Characters'
+import Thracia from '../Assets/Other/Thracia.jpg'
 
 
 function FierySkies(props) {
 
-    let [wizardState, setWizardState] = useState(Characters.Wizard)
-    const wizardRef = useRef(null)
+    let [kesselState, setKesselState] = useState(Characters.Kessel)
+    const kesselRef = useRef(null)
+    const [ThraciaImage] = useImage(Thracia)
     
-    const updateWizard = (dragging, x=null, y=null) => {
-        if (dragging==='dragging') {
-            setWizardState({...wizardState,
-                dragging: true
-            })
-        } else {
-            setWizardState({...wizardState,
-                location: {
-                    x: x,
-                    y: y
-                },
-                dragging: false
-            })
+    useEffect(() => {
+        if (kesselRef.current) {
+            kesselRef.current.start()
         }
-    }
+        }, [kesselRef])
 
     useEffect(() => {
-        if (wizardRef.current) {
-            wizardRef.current.start()
+        const kesselImage = new window.Image()
+        kesselImage.src = Characters.Kessel.image_import
+        kesselImage.onload = () => {
+            setKesselState({...kesselState, image: kesselImage})
         }
-        }, [wizardRef])
-
-    useEffect(() => {
-        const wizardImage = new window.Image()
-        wizardImage.src = Characters.Wizard.image_import
-        wizardImage.onload = () => {
-            setWizardState({...wizardState, image: wizardImage})
-        }
-    })
+        
+    }, [])
     
 
     return (
-        <div>
+        <div style={{margin: '2rem auto', width: '1284px', height: '724px', }}>
             <FierySkiesTemplate 
-                wizardState={wizardState}
-                updateWizard={updateWizard}
-                wizardRef={wizardRef}
+                kesselState={kesselState}
+                setKesselState={setKesselState}
+                kesselRef={kesselRef}
+                map={ThraciaImage}
             
             />
         </div>
