@@ -15,6 +15,7 @@ let starting_location = {
 
 export const Characters = {
     Kessel: {
+        name: 'Kessel',
         animation: 'idle',
         prevAnimation: 'idle',
         animationList: ['idle', 'run', 'leap', 'jump', 'fall', 'attack1', 'attack2', 'takeHit', 'die'],
@@ -108,14 +109,13 @@ export const Characters = {
 
         },
         image_import: Kessel_Image_Import,
-        image: null,
-        
         toggledStates: {
             mouseover: false,
             isDragging: false,
         }
     },
     Forren: {
+        name: 'Forren',
         animation: 'idle',
         prevAnimation: 'idle',
         animationList: ['idle', 'run', 'attack1', 'takeHit', 'die'],

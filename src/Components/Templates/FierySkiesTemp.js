@@ -1,21 +1,23 @@
 import React from 'react'
 import {Stage, Layer, Image} from 'react-konva'
 import {CharacterAnimation} from '../Organisms/CharacterAnimation'
+import Thracia from '../../Assets/Other/Thracia.jpg'
+import useImage from 'use-image'
 
 export default function FierySkiesTemplate(props) {
+    const [ThraciaImage] = useImage(Thracia)  
+
     return (
-        <Stage width={1300} height={720}>
+        <Stage width={1280} height={720}>
             <Layer>
                 <Image 
-                    image={props.map}
+                    image={ThraciaImage}
                 />
             </Layer>
             <Layer>
                 <CharacterAnimation
                     characterState={props.kesselState}
                     setCharacterState={props.setKesselState}
-                    characterName="Kessel"
-                    characterRef={props.kesselRef}
                 />
             </Layer>
         </Stage>

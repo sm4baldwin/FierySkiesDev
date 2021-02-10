@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import './App.css'
 
-import MenuBar from './Components/Organisms/MenuBar'
+// import MenuBar from './Components/Organisms/MenuBar'
 
 import FierySkies from './Pages/FierySkies'
 import EncouragementPage from './Pages/EncouragementPage'
