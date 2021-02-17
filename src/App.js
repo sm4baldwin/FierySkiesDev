@@ -15,9 +15,9 @@ import {theme} from './Contexts/ThemeContext'
 
 
 const pages = [
-  {title: 'Home', url: '/'},
-  {title: 'FierySkies', url: '/FierySkies/'},
-  {title: 'Encouragement', url: '/Encouragement/'},
+  {title: 'Head to Thracia', url: '/FierySkies/'},
+  {title: 'Check Announcements', url: '/Encouragement/'},
+  {title: 'Speak with the Concierge', url: '/StephenBaldwin'},
 ]
 
 function App() {
@@ -26,19 +26,24 @@ function App() {
       {/* <MenuBar /> */}
       <main className='App'>
         <Switch>
-          <Route path='/Encouragement/'>
-            <DBContextProvider>
-              <EncouragementPage />
-            </DBContextProvider>
+          <Route path='/' exact>
+            <HomePage pages={pages}/>
           </Route>
           <Route path='/FierySkies/'>
             <DBContextProvider>
               <FierySkies />
             </DBContextProvider>
           </Route>
-          <Route path='/' exact>
-            <HomePage pages={pages}/>
+          <Route path='/Encouragement/'>
+            <DBContextProvider>
+              <EncouragementPage />
+            </DBContextProvider>
           </Route>
+          {/* <Route path='/StephenBaldwin/'>
+            <DBContextProvider>
+              <FierySkies />
+            </DBContextProvider>
+          </Route> */}
         </Switch>
       </main>
     </ThemeProvider>
