@@ -109,36 +109,41 @@ export const CharacterAnimation = (props) => {
             x={props.characterState.sprite.spriteLocation.x + props.mapDragOffset.x}
             y={props.characterState.sprite.spriteLocation.y + props.mapDragOffset.y}
             draggable={true}
-            // dragBoundFunc={(pos) => {
-            //     let new_x
-            //     let new_y
-            //     switch (true) {
-            //         case pos.x < 10:
-            //             new_x = 10
-            //             break
-            //         case pos.x > 1200 + props.characterState.sprite.xBoundRightOffset:
-            //             new_x = 1200 + props.characterState.sprite.xBoundRightOffset
-            //             break
-            //         default:
-            //             new_x = pos.x
-            //             break
-            //     }
-            //     switch (true) {
-            //         case pos.y < -10:
-            //             new_y = -10
-            //             break
-            //         case pos.y + (props.characterState.sprite.spriteHeight * props.characterState.sprite.scale) >= 685:
-            //             new_y = 685 - (props.characterState.sprite.spriteHeight * props.characterState.sprite.scale)
-            //             break
-            //         default:
-            //             new_y = pos.y
-            //             break
-            //     }
-            //     return {
-            //         x: new_x,
-            //         y: new_y
-            //     }
-            // }}
+            
+            dragBoundFunc={(pos) => {
+
+                console.log(pos.y - props.mapDragOffset.y)
+                let scaleLeft =
+                    (props.ellipseRadius) / Math.sqrt(Math.pow(pos.x - props.center.centerLeft.x, 2) + Math.pow(pos.y - props.center.centerLeft.y, 2))
+                let scaleRight =
+                    (props.ellipseRadius) / Math.sqrt(Math.pow(pos.x - props.center.centerRight.x, 2) + Math.pow(pos.y - props.center.centerRight.y, 2));
+
+                    if (scaleLeft < 1 && pos.x < props.center.centerLeft.x) {
+                        return {
+                            y: Math.round((pos.y - props.center.centerLeft.y) * scaleLeft + props.center.centerLeft.y),
+                            x: Math.round((pos.x - props.center.centerLeft.x) * scaleLeft + props.center.centerLeft.x),
+                        }
+                    } else if (scaleRight < 1 && pos.x > props.center.centerRight.x) {
+                        return {
+                            y: Math.round((pos.y - props.center.centerRight.y) * scaleRight + props.center.centerRight.y),
+                            x: Math.round((pos.x - props.center.centerRight.x) * scaleRight + props.center.centerRight.x),
+                        }
+                    } else if (pos.y < props.center.centerLeft.y - props.ellipseRadius) {
+                        return {
+                            y: props.center.centerLeft.y - props.ellipseRadius,
+                            x: pos.x,
+                            
+                        }
+                    } else if (pos.y > props.center.centerLeft.y + props.ellipseRadius) {
+                        return {
+                            y: props.center.centerLeft.y + props.ellipseRadius,
+                            x: pos.x,
+                        }
+                    }
+                    else return pos
+
+
+            }}
             onDragStart={() => {
                 props.setCharacterState({...props.characterState, 
                     sprite: {
@@ -152,6 +157,7 @@ export const CharacterAnimation = (props) => {
                 })
             }}
             onDragEnd={(e) => {
+
                 props.setCharacterState({...props.characterState, 
                     sprite: {
                         ...props.characterState.sprite,
@@ -167,6 +173,7 @@ export const CharacterAnimation = (props) => {
                     }
                 })
             }}
+            
         >            
             <Sprite
                 ref={characterRef}

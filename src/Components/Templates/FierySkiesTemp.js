@@ -1,8 +1,9 @@
 import React, {useState, } from 'react'
-import {Stage, Layer, Image, Group} from 'react-konva'
+import {Stage, Layer, Image, Group, Circle} from 'react-konva'
 import {CharacterAnimation, CharacterSelection} from '../Organisms/CharacterAnimation'
 import Thracia from '../../Assets/Other/Thracia.jpg'
 import useImage from 'use-image'
+import { black } from 'material-ui/styles/colors'
 
 export default function FierySkiesTemplate(props) {
     const [ThraciaImage] = useImage(Thracia)
@@ -128,6 +129,8 @@ export default function FierySkiesTemplate(props) {
             <Stage
                 width={stageWidth}
                 height={stageHeight}
+                x={0}
+                y={0}
                 onTouchStart={(e) => {
                     e.evt.preventDefault()
                 }}
@@ -193,10 +196,21 @@ export default function FierySkiesTemplate(props) {
                                 characterState={characterList[selectedCharacter].state}
                                 setCharacterState={characterList[selectedCharacter].setState}
                                 mapDragOffset={mapDrag}
+                                ellipseRadius={stageHeight/2 - 50}
+
+                                center={{
+                                    centerLeft: {
+                                        x: ellipseWidth/2 + mapDrag.x + 500 - 235,
+                                        y: ellipseHeight/2 + mapDrag.y + 190},
+                                    centerRight: {
+                                        x: ellipseWidth/2 + mapDrag.x + 500 + 170,
+                                        y: ellipseHeight/2 + mapDrag.y + 190},
+                                    }}
                             />}
                         </Group>
                         
                 </Layer>
+                <Layer><Circle x={ellipseWidth/2 + mapDrag.x + 500} y={ellipseHeight/2 + mapDrag.y + 250} radius={10} fillEnabled={true} fill={black}/></Layer>
             </Stage>
         </div>
     )
