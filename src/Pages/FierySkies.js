@@ -70,20 +70,20 @@ function FierySkies(props) {
 
     return (
         <div style={{ width: '100vw'}}>
-            <InGameMenu
-                setSelectedTab={setSelectedTab}
-            />
             {selectedTab === 'Map' && <FStempMap
                 selectedCharacterState={characterList[selectedCharacter].state}
                 setSelectedCharacterState={characterList[selectedCharacter].setState}
-            
-            />}
+                
+                />}
             {selectedTab === 'Character' && <FStempCharProfile
                 characterList={characterList}
                 selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter}
-            
-            />}
+                
+                />}
+            <InGameMenu
+                setSelectedTab={setSelectedTab}
+            />
         </div>
     )
 }
@@ -96,14 +96,8 @@ const InGameMenu = function(props) {
     // const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
     return (
-        <>
-        {menuHidden && <IconButton edge='start' style={{position: smallMedia ? 'static' : 'fixed', top: 'auto', bottom: '0', left: '1.45rem', border: '1px solid grey', boxSizing: 'border-box'}} color="primary" aria-label="menu" onClick={(e) => {
-            e.preventDefault()
-            setMenuHidden(!menuHidden)
-        }}>
-            <MenuIcon />
-        </IconButton>}
-        {!menuHidden && <AppBar position="fixed" color='default' style={{top: 'auto', bottom: '0'}}>
+        <div>
+        {!menuHidden && <AppBar position="static" color='default' style={{padding: '.1rem'}}>
             <Toolbar variant='dense'>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={(e) => {
                     e.preventDefault()
@@ -112,26 +106,32 @@ const InGameMenu = function(props) {
                     <MenuIcon />
                 </IconButton>
                 <ButtonGroup style={{margin: '0 auto'}}>
-                    <Button color="primary" onClick={(e) => {
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
                         e.preventDefault()
                         props.setSelectedTab('Cards')
                     }}>Cards</Button>
-                    <Button color="primary" onClick={(e) => {
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
                         e.preventDefault()
                         props.setSelectedTab('Character')
                     }}>Character</Button>
-                    <Button color="primary" onClick={(e) => {
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
                         e.preventDefault()
                         props.setSelectedTab('Map')
                     }}>Map</Button>
-                    <Button color="primary" onClick={(e) => {
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
                         e.preventDefault()
                         props.setSelectedTab('Journal')
                     }}>Journal</Button>
                 </ButtonGroup>
             </Toolbar>
       </AppBar>}
-      </>
+      {menuHidden && <IconButton edge='start' style={{position: 'static', border: '1px solid grey', float: 'left', margin: '0 0 0 2rem'}} color='primary' aria-label="menu" onClick={(e) => {
+          e.preventDefault()
+          setMenuHidden(!menuHidden)
+      }}>
+          <MenuIcon />
+      </IconButton>}
+      </div>
     )
 }
 

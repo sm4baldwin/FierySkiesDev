@@ -20,6 +20,11 @@ function ActiveCharacterProfile(props) {
             selectedCharacter={props.selectedCharacter}
             setSelectedCharacter={props.setSelectedCharacter}
         />}
+        {smallMedia && <SelectionList
+            characterList={props.characterList}
+            selectedCharacter={props.selectedCharacter}
+            setSelectedCharacter={props.setSelectedCharacter}
+        />}
         </>
     )
 }
