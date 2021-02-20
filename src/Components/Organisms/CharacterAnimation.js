@@ -14,14 +14,14 @@ export const CharacterSelection = (props) => {
     }, [characterRef])
 
     useEffect(() => {
-        if (props.selected !== props.characterState.name && props.characterState.sprite.selectionAnimation === 'attack1') {
+        if (props.selectedCharacter !== props.characterState.name && props.characterState.sprite.selectionAnimation === 'attack1') {
             props.setCharacterState({...props.characterState, 
                 sprite: {
                     ...props.characterState.sprite,
                     selectionAnimation: 'idle',
                 }
             })
-        } else if (props.selected === props.characterState.name && props.characterState.sprite.selectionAnimation !== 'attack1') {
+        } else if (props.selectedCharacter === props.characterState.name && props.characterState.sprite.selectionAnimation !== 'attack1') {
             props.setCharacterState({...props.characterState, 
                 sprite: {
                     ...props.characterState.sprite,
@@ -81,7 +81,7 @@ export const CharacterSelection = (props) => {
                     }
                 }}
                 onClick={() => {
-                    props.selectCharacter(props.characterState.name)
+                    props.setSelectedCharacter(props.characterState.name)
                 }}
             />
             <Text 

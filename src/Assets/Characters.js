@@ -9,8 +9,8 @@ import MadamePeregrin_Image_Import from '../Assets/PixelArt/MadamePeregrin.png'
 import Eugenides_Image_Import from '../Assets/PixelArt/Eugenides.png'
 //These are the default measurements for the pixelized sprite animations
 let starting_location = {
-    x: 1150,
-    y: 550,
+    x: 800,
+    y: 650,
     z: 0
 }
 
