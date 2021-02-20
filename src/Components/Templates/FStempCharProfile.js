@@ -2,9 +2,9 @@ import React from 'react'
 import {Stage, Layer} from 'react-konva'
 import { useMediaQuery } from '@material-ui/core'
 import {useTheme} from '@material-ui/core/styles'
+import useDimensions from 'react-cool-dimensions'
 
 import {CharacterSelection} from '../Organisms/CharacterAnimation'
-
 function ActiveCharacterProfile(props) {
 
     const theme = useTheme()
@@ -30,25 +30,29 @@ function ActiveCharacterProfile(props) {
 }
 
 function SelectionList(props) {
+    const { width, height, observe } = useDimensions()
+
     return (
-        <Stage width={1000} height={1000}>
-            <Layer>
-                {
-                Object.entries(props.characterList).map((character, order) => {
-                    return (
-                        <CharacterSelection
-                            characterState={character[1].state}
-                            setCharacterState={character[1].setState}
-                            setSelectedCharacter={props.setSelectedCharacter}
-                            selectedCharacter={props.selectedCharacter}
-                            order={order}
-                            key={order}
-                        />
-                    )
-                })
-                }
-            </Layer>
-        </Stage>
+        <div style={{width: '90vw', height: '90vh'}} ref={observe}>
+            <Stage width={width} height={height}>
+                <Layer>
+                    {
+                    Object.entries(props.characterList).map((character, order) => {
+                        return (
+                            <CharacterSelection
+                                characterState={character[1].state}
+                                setCharacterState={character[1].setState}
+                                setSelectedCharacter={props.setSelectedCharacter}
+                                selectedCharacter={props.selectedCharacter}
+                                order={order}
+                                key={order}
+                            />
+                        )
+                    })
+                    }
+                </Layer>
+            </Stage>
+        </div>
     )
 }
 

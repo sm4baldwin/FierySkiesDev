@@ -96,8 +96,8 @@ const InGameMenu = function(props) {
     // const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
     return (
-        <div>
-        {!menuHidden && <AppBar position="static" color='default' style={{padding: '.1rem'}}>
+        <div style={{height: '6vh', width: '100vw'}}>
+        {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color='default' >
             <Toolbar variant='dense'>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={(e) => {
                     e.preventDefault()
@@ -125,7 +125,7 @@ const InGameMenu = function(props) {
                 </ButtonGroup>
             </Toolbar>
       </AppBar>}
-      {menuHidden && <IconButton edge='start' style={{position: 'static', border: '1px solid grey', float: 'left', margin: '0 0 0 2rem'}} color='primary' aria-label="menu" onClick={(e) => {
+      {menuHidden && <IconButton edge='start' style={{position: 'fixed', bottom: '0', top: 'auto', left: '0', right: 'auto', border: '1px solid grey', align: 'left', marginLeft: '.6rem'}} color='primary' aria-label="menu" onClick={(e) => {
           e.preventDefault()
           setMenuHidden(!menuHidden)
       }}>

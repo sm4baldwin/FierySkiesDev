@@ -5,23 +5,22 @@ import Thracia from '../../Assets/Other/Thracia.jpg'
 import useImage from 'use-image'
 import { useMediaQuery } from '@material-ui/core'
 import {useTheme} from '@material-ui/core/styles'
+import useDimensions from 'react-cool-dimensions'
 
 
 export default function FStempMap(props) {
     const [ThraciaImage] = useImage(Thracia)
- 
+    const { width, height, observe } = useDimensions()
 
     const theme = useTheme()
     const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
     const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-    const windowSize = useWindowSize()
 
-    let ellipseWidth = !smallMedia ? .9 * windowSize.width - 2 : windowSize.width - 2
-    let ellipseHeight = windowSize.height
-    let selectionWidth = !smallMedia ? windowSize.width *.08 : 80
+    let ellipseWidth = width
+    let ellipseHeight = height
     let ellipseCenter = {
-        x: ellipseWidth/2 + 1,
-        y: windowSize.height/2 + 1
+        x: width/2 + 1,
+        y: height/2 + 1
     }
     const stageWidth = 2222
     const stageHeight = 1250
@@ -29,9 +28,7 @@ export default function FStempMap(props) {
     const [mapDrag, setMapDrag] = useState({x: -500, y: -250})
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row', height: `${windowSize.height}px`}}>
-            
-            
+        <div style={{display: 'flex', flexDirection: 'row', height: `90vh`, width: `95vw`, margin: '1vh auto'}} ref={observe}>
             <Stage
                 width={ellipseWidth + 2}
                 height={ellipseHeight + 2}
