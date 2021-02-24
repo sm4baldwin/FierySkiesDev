@@ -83,6 +83,9 @@ export const CharacterSelection = (props) => {
                 onClick={() => {
                     props.setSelectedCharacter(props.characterState.name)
                 }}
+                onTap={() => {
+                    props.setSelectedCharacter(props.characterState.name)
+                }}
             />
             <Text 
                 text={`${props.characterState.name}`}
@@ -112,7 +115,6 @@ export const CharacterAnimation = (props) => {
             
             dragBoundFunc={(pos) => {
 
-                console.log(pos.y - props.mapDragOffset.y)
                 let scaleLeft =
                     (props.ellipseRadius) / Math.sqrt(Math.pow(pos.x - props.center.centerLeft.x, 2) + Math.pow(pos.y - props.center.centerLeft.y, 2))
                 let scaleRight =
@@ -166,7 +168,7 @@ export const CharacterAnimation = (props) => {
                             y: e.target.y() - props.mapDragOffset.y
                         },
                         toggledStates: {
-                            mouseover: true,
+                            mouseover: false,
                             isDragging: false
                         },
                         animation: props.characterState.sprite.prevAnimation
@@ -216,6 +218,19 @@ export const CharacterAnimation = (props) => {
                     })
                 }}
                 onClick={() => {
+                    let randomAnim = props.characterState.sprite.animation
+                    while (randomAnim === props.characterState.sprite.animation) {
+                        randomAnim = props.characterState.sprite.animationList[Math.floor(Math.random()*props.characterState.sprite.animationList.length)]
+                    }
+                    props.setCharacterState({...props.characterState, 
+                        sprite: {
+                            ...props.characterState.sprite,
+                            animation: randomAnim,
+                            prevAnimation: randomAnim
+                        }
+                    })
+                }}
+                onTap={() => {
                     let randomAnim = props.characterState.sprite.animation
                     while (randomAnim === props.characterState.sprite.animation) {
                         randomAnim = props.characterState.sprite.animationList[Math.floor(Math.random()*props.characterState.sprite.animationList.length)]

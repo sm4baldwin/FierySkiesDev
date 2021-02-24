@@ -16,30 +16,27 @@ export default function FStempMap(props) {
     const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
     const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
+    let scale = smallMedia ? {x: 0.5, y: 0.5} : mediumMedia ? {x: 0.8, y: 0.8} : {x: 1, y: 1}
+
+    let stageWidth = 2222 * scale.x
+    let stageHeight = 1250 * scale.y
     let ellipseWidth = width
     let ellipseHeight = height
     let ellipseCenter = {
-        x: width/2 + 1,
-        y: height/2 + 1
+        x: width/2,
+        y: height/2
     }
-    const stageWidth = 2222
-    const stageHeight = 1250
 
-    const [mapDrag, setMapDrag] = useState({x: -500, y: -250})
+    const mapConstOffset = {x: -500 * scale.x, y: -250 * scale.y}
+    const [mapDrag, setMapDrag] = useState({x: mapConstOffset.x, y: mapConstOffset.y})
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: `90vh`, width: `95vw`, margin: '1vh auto'}} ref={observe}>
             <Stage
-                width={ellipseWidth + 2}
-                height={ellipseHeight + 2}
+                width={width}
+                height={height}
                 x={0}
                 y={0}
-                onTouchStart={(e) => {
-                    e.evt.preventDefault()
-                }}
-                onTouchMove={(e) => {
-                    e.evt.preventDefault()
-                }}
                 
             >
                 <Layer
@@ -59,39 +56,46 @@ export default function FStempMap(props) {
                             <Image 
                                 draggable
                                 image={ThraciaImage} x={mapDrag.x} y={mapDrag.y}
+                                scale={scale}
                                 onDragMove={(e) => {
                                     setMapDrag({x: e.target.x(), y: e.target.y()})
 
                                 }}
                                 dragBoundFunc={(pos) => {
-                                    let new_x
-                                    let new_y
-                                    switch (true) {
-                                        case pos.x > -300:
-                                            new_x = -300
-                                            break
-                                        case pos.x < -(stageWidth - ellipseWidth - 250):
-                                            new_x = -(stageWidth - ellipseWidth - 250)
-                                            break
-                                        default:
-                                            new_x = pos.x
-                                            break
+                                    let radius = (stageHeight - height)/2
+                                    let xBound = -(stageWidth - width)
+                                    let yBound = -(2*radius)
+                                    let centerLeft = {x: -radius, y: -radius}
+                                    let centerRight = {x: xBound + radius, y: -radius}
+                                    console.log([centerLeft.x, pos.x])
+                                    let scaleLeft =
+                                    (radius) / Math.sqrt(Math.pow(pos.x - (centerLeft.x), 2) + Math.pow(pos.y - centerLeft.y, 2))
+                                    let scaleRight =
+                                    (radius) / Math.sqrt(Math.pow(pos.x - (centerRight.x), 2) + Math.pow(pos.y - centerRight.y, 2))
+
+                                    if (scaleLeft < 1 && pos.x > (centerLeft.x)) {
+                                        return {
+                                            y: Math.round((pos.y - centerLeft.y) * scaleLeft + centerLeft.y),
+                                            x: Math.round((pos.x - centerLeft.x) * scaleLeft + centerLeft.x),
+                                        }
                                     }
-                                    switch (true) {
-                                        case pos.y > 25:
-                                            new_y = 25
-                                            break
-                                        case pos.y < -(stageHeight - ellipseHeight - 25):
-                                            new_y = -(stageHeight - ellipseHeight - 25)
-                                            break
-                                        default:
-                                            new_y = pos.y
-                                            break
+                                    if (scaleRight < 1 && pos.x < (centerRight.x)) {
+                                        return {
+                                            y: Math.round((pos.y - centerRight.y) * scaleRight + centerRight.y),
+                                            x: Math.round((pos.x - centerRight.x) * scaleRight + centerRight.x),
+                                        }
+                                    } else if (pos.y > 0) {
+                                        return {
+                                            y: 0,
+                                            x: pos.x,
+                                        }
+                                    } else if (pos.y < yBound) {
+                                        return {
+                                            y: yBound,
+                                            x: pos.x,
+                                        }
                                     }
-                                    return {
-                                        x: new_x,
-                                        y: new_y
-                                    }
+                                    else return pos
                                 }}
                             />
                             {props.selectedCharacterState && 
@@ -99,7 +103,7 @@ export default function FStempMap(props) {
                                 characterState={props.selectedCharacterState}
                                 setCharacterState={props.setSelectedCharacterState}
                                 mapDragOffset={mapDrag}
-                                ellipseRadius={stageHeight/2 - 50}
+                                ellipseRadius={ellipseHeight/2}
 
                                 center={{
                                     centerLeft: {
@@ -118,37 +122,6 @@ export default function FStempMap(props) {
         </div>
     )
 }
-
-function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    const [windowSize, setWindowSize] = useState({
-      width: 1300,
-      height: 750,
-    })
-  
-    useEffect(() => {
-      // Handler to call on window resize
-      function handleResize() {
-        // Set window width/height to state
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-      
-      // Add event listener
-      window.addEventListener("resize", handleResize);
-      
-      // Call handler right away so state gets updated with initial window size
-      handleResize();
-      
-      // Remove event listener on cleanup
-      return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-  
-    return windowSize;
-}
-
 
 
 // function Map(props) {

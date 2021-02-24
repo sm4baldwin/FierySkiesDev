@@ -82,6 +82,7 @@ function FierySkies(props) {
                 
                 />}
             <InGameMenu
+                selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
             />
         </div>
@@ -97,7 +98,7 @@ const InGameMenu = function(props) {
 
     return (
         <div style={{height: '6vh', width: '100vw'}}>
-        {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color='default' >
+        {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color={'secondary'} >
             <Toolbar variant='dense'>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={(e) => {
                     e.preventDefault()
@@ -105,23 +106,47 @@ const InGameMenu = function(props) {
                 }}>
                     <MenuIcon />
                 </IconButton>
-                <ButtonGroup style={{margin: '0 auto'}}>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
-                        e.preventDefault()
-                        props.setSelectedTab('Cards')
-                    }}>Cards</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
-                        e.preventDefault()
-                        props.setSelectedTab('Character')
-                    }}>Character</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
-                        e.preventDefault()
-                        props.setSelectedTab('Map')
-                    }}>Map</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" onClick={(e) => {
-                        e.preventDefault()
-                        props.setSelectedTab('Journal')
-                    }}>Journal</Button>
+                <ButtonGroup disableRipple variant='contained' disableElevation style={{margin: '0 auto'}}>
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                        style={
+                            props.selectedTab === "Cards" ? 
+                            {backgroundColor: theme.palette.primary.dark}
+                            : {}}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            props.setSelectedTab('Cards')
+                        }}
+                    >Cards</Button>
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                        style={
+                            props.selectedTab === "Character" ? 
+                            {backgroundColor: theme.palette.primary.dark}
+                            : {}}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            props.setSelectedTab('Character')
+                        }}
+                    >Character</Button>
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                        style={
+                            props.selectedTab === "Map" ? 
+                            {backgroundColor: theme.palette.primary.dark}
+                            : {}}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            props.setSelectedTab('Map')
+                        }}
+                    >Map</Button>
+                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                        style={
+                            props.selectedTab === "Journal" ? 
+                            {backgroundColor: theme.palette.primary.dark}
+                            : {}}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            props.setSelectedTab('Journal')
+                        }}
+                    >Journal</Button>
                 </ButtonGroup>
             </Toolbar>
       </AppBar>}
