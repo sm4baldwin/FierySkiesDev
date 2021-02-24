@@ -1,6 +1,8 @@
 import React, {useRef, useEffect} from 'react'
 import {Sprite, Group, Text} from 'react-konva'
 import useImage from 'use-image'
+import { useMediaQuery } from '@material-ui/core'
+import {useTheme} from '@material-ui/core/styles'
 
 
 export const CharacterSelection = (props) => {
@@ -100,6 +102,10 @@ export const CharacterSelection = (props) => {
 export const CharacterAnimation = (props) => {
     const characterRef = useRef(null)
     const [characterImage] = useImage(props.characterState.sprite.image_import)
+    const theme = useTheme()
+    const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
+    const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
+    let scale = smallMedia ? 0.5 : mediumMedia ? 0.8 : 1
 
     useEffect(() => {
         if (characterRef.current) {
@@ -109,8 +115,8 @@ export const CharacterAnimation = (props) => {
 
     return (
         <Group
-            x={props.characterState.sprite.spriteLocation.x + props.mapDragOffset.x}
-            y={props.characterState.sprite.spriteLocation.y + props.mapDragOffset.y}
+            x={props.characterState.sprite.spriteLocation.x * scale + props.mapDragOffset.x}
+            y={props.characterState.sprite.spriteLocation.y * scale + props.mapDragOffset.y}
             draggable={true}
             
             dragBoundFunc={(pos) => {
@@ -164,8 +170,8 @@ export const CharacterAnimation = (props) => {
                     sprite: {
                         ...props.characterState.sprite,
                         spriteLocation: {
-                            x: e.target.x() - props.mapDragOffset.x,
-                            y: e.target.y() - props.mapDragOffset.y
+                            x: (e.target.x() - props.mapDragOffset.x)/scale,
+                            y: (e.target.y() - props.mapDragOffset.y)/scale
                         },
                         toggledStates: {
                             mouseover: false,
@@ -187,13 +193,13 @@ export const CharacterAnimation = (props) => {
                 shadowColor={'rgb(161,161,161)'}
                 shadowEnabled={true}
                 shadowForStrokeEnabled={false}
-                shadowOffset={{x: 5, y: 15}}
+                shadowOffset={{x: 5*scale, y: 15*scale}}
                 shadowBlur={20}
                 shadowOpacity={30}
                 x={0}
                 y={0}
-                scaleX={props.characterState.sprite.scale}
-                scaleY={props.characterState.sprite.scale}
+                scaleX={props.characterState.sprite.scale*scale}
+                scaleY={props.characterState.sprite.scale*scale}
                 onMouseOver={() => {
                     props.setCharacterState({...props.characterState, 
                         sprite: {
@@ -248,8 +254,9 @@ export const CharacterAnimation = (props) => {
             <Text 
                 text={`${props.characterState.name}`}
                 fill={'darkmagenta'}
-                y={props.characterState.sprite.spriteLocation.y >= 600 ? Math.abs(props.characterState.sprite.labelOffset) : props.characterState.sprite.spriteHeight * props.characterState.sprite.scale}
-                x={props.characterState.sprite.labelOffset}
+                fontSize={smallMedia ? 10 : mediumMedia ? 12 : 14}
+                y={props.characterState.sprite.spriteLocation.y >= 600 ? Math.abs(props.characterState.sprite.labelOffset * scale) : props.characterState.sprite.spriteHeight * props.characterState.sprite.scale * scale}
+                x={props.characterState.sprite.labelOffset * scale}
                 align={'center'}
             />}
         </Group>

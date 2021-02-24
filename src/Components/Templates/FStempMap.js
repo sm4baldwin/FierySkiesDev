@@ -27,8 +27,8 @@ export default function FStempMap(props) {
         y: height/2
     }
 
-    const mapConstOffset = {x: -500 * scale.x, y: -250 * scale.y}
-    const [mapDrag, setMapDrag] = useState({x: mapConstOffset.x, y: mapConstOffset.y})
+    const [mapDrag, setMapDrag] = useState({x: 0 - 350 * scale.x, y: 0 - 180 * scale.y})
+
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: `90vh`, width: `95vw`, margin: '1vh auto'}} ref={observe}>
@@ -59,7 +59,6 @@ export default function FStempMap(props) {
                                 scale={scale}
                                 onDragMove={(e) => {
                                     setMapDrag({x: e.target.x(), y: e.target.y()})
-
                                 }}
                                 dragBoundFunc={(pos) => {
                                     let radius = (stageHeight - height)/2
@@ -67,7 +66,6 @@ export default function FStempMap(props) {
                                     let yBound = -(2*radius)
                                     let centerLeft = {x: -radius, y: -radius}
                                     let centerRight = {x: xBound + radius, y: -radius}
-                                    console.log([centerLeft.x, pos.x])
                                     let scaleLeft =
                                     (radius) / Math.sqrt(Math.pow(pos.x - (centerLeft.x), 2) + Math.pow(pos.y - centerLeft.y, 2))
                                     let scaleRight =
