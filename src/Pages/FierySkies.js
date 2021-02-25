@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-
+import './FierySkies.css'
 import FStempMap from '../Components/Templates/FStempMap'
 import FStempCharProfile from '../Components/Templates/FStempCharProfile'
 
@@ -65,14 +65,14 @@ function FierySkies(props) {
     // const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
     const [selectedTab, setSelectedTab] = useState('Map')
-    let [selectedCharacter, setSelectedCharacter] = useState("Kessellia")
+    let [selectedCharacter, setSelectedCharacter] = useState(null)
 
 
     return (
-        <div style={{ width: '100vw'}}>
+        <div className='fieryskiesContainer'>
             {selectedTab === 'Map' && <FStempMap
-                selectedCharacterState={characterList[selectedCharacter].state}
-                setSelectedCharacterState={characterList[selectedCharacter].setState}
+                selectedCharacterState={selectedCharacter ? characterList[selectedCharacter].state : null}
+                setSelectedCharacterState={selectedCharacter ? characterList[selectedCharacter].setState : null}
                 
                 />}
             {selectedTab === 'Character' && <FStempCharProfile
@@ -97,7 +97,7 @@ const InGameMenu = function(props) {
     // const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
     return (
-        <div style={{height: '6vh', width: '100vw'}}>
+        <div style={{height: smallMedia ? '3%' : '5%', width: '100vw'}}>
         {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color={'secondary'} >
             <Toolbar variant='dense'>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={(e) => {
@@ -107,40 +107,40 @@ const InGameMenu = function(props) {
                     <MenuIcon />
                 </IconButton>
                 <ButtonGroup disableRipple variant='contained' disableElevation style={{margin: '0 auto'}}>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                    <Button size={smallMedia ? 'small' : 'medium'} color="default" 
                         style={
                             props.selectedTab === "Cards" ? 
-                            {backgroundColor: theme.palette.primary.dark}
+                            {backgroundColor: theme.palette.primary.light, color: theme.palette.common.white}
                             : {}}
                         onClick={(e) => {
                             e.preventDefault()
                             props.setSelectedTab('Cards')
                         }}
                     >Cards</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                    <Button size={smallMedia ? 'small' : 'medium'} color="default" 
                         style={
                             props.selectedTab === "Character" ? 
-                            {backgroundColor: theme.palette.primary.dark}
+                            {backgroundColor: theme.palette.primary.light, color: theme.palette.common.white}
                             : {}}
                         onClick={(e) => {
                             e.preventDefault()
                             props.setSelectedTab('Character')
                         }}
                     >Character</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                    <Button size={smallMedia ? 'small' : 'medium'} color="default" 
                         style={
                             props.selectedTab === "Map" ? 
-                            {backgroundColor: theme.palette.primary.dark}
+                            {backgroundColor: theme.palette.primary.light, color: theme.palette.common.white}
                             : {}}
                         onClick={(e) => {
                             e.preventDefault()
                             props.setSelectedTab('Map')
                         }}
                     >Map</Button>
-                    <Button size={smallMedia ? 'small' : 'medium'} color="primary" 
+                    <Button size={smallMedia ? 'small' : 'medium'} color="default" 
                         style={
                             props.selectedTab === "Journal" ? 
-                            {backgroundColor: theme.palette.primary.dark}
+                            {backgroundColor: theme.palette.primary.light, color: theme.palette.common.white}
                             : {}}
                         onClick={(e) => {
                             e.preventDefault()

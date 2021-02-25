@@ -8,6 +8,10 @@ import {useTheme} from '@material-ui/core/styles'
 export const CharacterSelection = (props) => {
     const characterRef = useRef(null)
     const [characterImage] = useImage(props.characterState.sprite.image_import)
+    const theme = useTheme()
+    const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
+    const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
+    let scale = smallMedia ? 0.8 : mediumMedia ? 0.9 : 1
 
     useEffect(() => {
         if (characterRef.current) {
@@ -37,7 +41,7 @@ export const CharacterSelection = (props) => {
     return (
         <Group
             x={props.characterState.sprite.selectionOffset + 5}
-            y={props.order * 79}
+            y={79}
             draggable={false}
         >            
             <Sprite
@@ -51,8 +55,8 @@ export const CharacterSelection = (props) => {
                 animations={props.characterState.sprite.animations}
                 x={0}
                 y={0}
-                scaleX={props.characterState.sprite.scale}
-                scaleY={props.characterState.sprite.scale}
+                scaleX={props.characterState.sprite.scale*props.spriteScale}
+                scaleY={props.characterState.sprite.scale*props.spriteScale}
                 onMouseOver={() => {
                     if (props.characterState.sprite.selectionAnimation !== 'attack1') {
                         props.setCharacterState({...props.characterState, 
@@ -62,7 +66,7 @@ export const CharacterSelection = (props) => {
                                     ...props.characterState.sprite.toggledStates,
                                     mouseover: true,
                                 },
-                                prevSelectionAnimation: props.characterState.sprite.prevSelectionAnimation,
+                                prevSelectionAnimation: props.characterState.sprite.selectionAnimation,
                                 selectionAnimation: 'run',
                             }
                         })
@@ -91,8 +95,9 @@ export const CharacterSelection = (props) => {
             />
             <Text 
                 text={`${props.characterState.name}`}
-                y={props.characterState.sprite.spriteHeight * props.characterState.sprite.scale}
-                x={props.characterState.sprite.labelOffset}
+                fontSize={smallMedia ? 10 : mediumMedia ? 12 : 14}
+                y={props.characterState.sprite.spriteHeight * props.characterState.sprite.scale * scale}
+                x={props.characterState.sprite.labelOffset * scale}
                 align={'center'}
             />
         </Group>
@@ -115,8 +120,8 @@ export const CharacterAnimation = (props) => {
 
     return (
         <Group
-            x={props.characterState.sprite.spriteLocation.x * scale + props.mapDragOffset.x}
-            y={props.characterState.sprite.spriteLocation.y * scale + props.mapDragOffset.y}
+            x={(props.characterState.sprite.spriteLocation.x * scale + props.mapDragOffset.x) }
+            y={(props.characterState.sprite.spriteLocation.y * scale + props.mapDragOffset.y)}
             draggable={true}
             
             dragBoundFunc={(pos) => {

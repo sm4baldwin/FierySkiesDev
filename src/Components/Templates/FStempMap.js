@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Stage, Layer, Image, Group} from 'react-konva'
 import {CharacterAnimation} from '../Organisms/CharacterAnimation'
 import Thracia from '../../Assets/Other/Thracia.jpg'
@@ -11,44 +11,37 @@ import useDimensions from 'react-cool-dimensions'
 export default function FStempMap(props) {
     const [ThraciaImage] = useImage(Thracia)
     const { width, height, observe } = useDimensions()
-
+    
     const theme = useTheme()
     const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
     const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-
-    let scale = smallMedia ? {x: 0.5, y: 0.5} : mediumMedia ? {x: 0.8, y: 0.8} : {x: 1, y: 1}
+    
+    let scale = (smallMedia && (height < 500)) ? {x: 0.5, y: 0.5} : ((smallMedia || mediumMedia) && (height < 700)) ? {x: 0.8, y: 0.8} : {x: 1, y: 1}
 
     let stageWidth = 2222 * scale.x
     let stageHeight = 1250 * scale.y
-    let ellipseWidth = width
-    let ellipseHeight = height
+    let ellipseWidth = width > 0 ? width - 2 : 0
+    let ellipseHeight = height > 0 ? height - 2 : 0
     let ellipseCenter = {
-        x: width/2,
-        y: height/2
+        x: ellipseWidth/2 + 1,
+        y: ellipseHeight/2 + 1
     }
-
-    const [mapDrag, setMapDrag] = useState({x: 0 - 350 * scale.x, y: 0 - 180 * scale.y})
-
+    const [mapDrag, setMapDrag] = useState({x: 0 - 550 * scale.x, y: -100 * scale.y})
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row', height: `90vh`, width: `95vw`, margin: '1vh auto'}} ref={observe}>
+        <div style={{height: `98%`, width: `95%`, margin: '0 auto', padding: '1% 0'}} ref={observe}>
             <Stage
                 width={width}
                 height={height}
                 x={0}
                 y={0}
-                
             >
-                <Layer
-                    style={{overflow: 'scroll'}}
-                >
+                <Layer>
                     <Group
                         clipFunc={(ctx) => {
                             ctx.beginPath()
                             ctx.ellipse(ellipseCenter.x, ellipseCenter.y, ellipseWidth/2, ellipseHeight/2, 0, 0, 2 * Math.PI)
                             ctx.stroke()
-                            
-                            ;
                         }}
                         position={{x: 0, y: 0}}
 
@@ -101,114 +94,21 @@ export default function FStempMap(props) {
                                 characterState={props.selectedCharacterState}
                                 setCharacterState={props.setSelectedCharacterState}
                                 mapDragOffset={mapDrag}
-                                ellipseRadius={ellipseHeight/2}
+                                ellipseRadius={stageHeight/2 - 50 * scale.x}
 
                                 center={{
                                     centerLeft: {
-                                        x: ellipseWidth/2 + mapDrag.x + 500 - 235,
-                                        y: ellipseHeight/2 + mapDrag.y + 190},
+                                        x: stageWidth/2 + mapDrag.x + (-185) * scale.x,
+                                        y: stageHeight/2 + mapDrag.y - 50 * scale.y},
                                     centerRight: {
-                                        x: ellipseWidth/2 + mapDrag.x + 500 + 170,
-                                        y: ellipseHeight/2 + mapDrag.y + 190},
+                                        x: stageWidth/2 + mapDrag.x + (185) * scale.x,
+                                        y: stageHeight/2 + mapDrag.y - 50 * scale.y},
                                     }}
                             />}
                         </Group>
                         
                 </Layer>
-                
             </Stage>
         </div>
     )
 }
-
-
-// function Map(props) {
-//     return (
-//         <Stage
-//             width={stageWidth}
-//             height={stageHeight}
-//             x={0}
-//             y={0}
-//             onTouchStart={(e) => {
-//                 e.evt.preventDefault()
-//             }}
-//             onTouchMove={(e) => {
-//                 e.evt.preventDefault()
-//             }}
-            
-//         >
-//             <Layer
-//                 style={{overflow: 'scroll'}}
-//             >
-//                 <Group
-//                     clipFunc={(ctx) => {
-//                         ctx.beginPath()
-//                         ctx.ellipse(ellipseCenter.x, ellipseCenter.y, ellipseWidth/2, ellipseHeight/2, 0, 0, 2 * Math.PI)
-//                         ctx.stroke()
-                        
-//                         ;
-//                     }}
-//                     position={{x: 0, y: 0}}
-
-//                     >
-//                         <Image 
-//                             draggable
-//                             image={ThraciaImage} x={mapDrag.x} y={mapDrag.y}
-//                             onDragMove={(e) => {
-//                                 setMapDrag({x: e.target.x(), y: e.target.y()})
-
-//                             }}
-//                             dragBoundFunc={(pos) => {
-//                                 let new_x
-//                                 let new_y
-//                                 switch (true) {
-//                                     case pos.x > -300:
-//                                         new_x = -300
-//                                         break
-//                                     case pos.x < -(stageWidth - ellipseWidth - 250):
-//                                         new_x = -(stageWidth - ellipseWidth - 250)
-//                                         break
-//                                     default:
-//                                         new_x = pos.x
-//                                         break
-//                                 }
-//                                 switch (true) {
-//                                     case pos.y > 25:
-//                                         new_y = 25
-//                                         break
-//                                     case pos.y < -(stageHeight - ellipseHeight - 25):
-//                                         new_y = -(stageHeight - ellipseHeight - 25)
-//                                         break
-//                                     default:
-//                                         new_y = pos.y
-//                                         break
-//                                 }
-//                                 return {
-//                                     x: new_x,
-//                                     y: new_y
-//                                 }
-//                             }}
-//                         />
-//                         {selectedCharacter && 
-//                         <CharacterAnimation
-//                             characterState={characterList[selectedCharacter].state}
-//                             setCharacterState={characterList[selectedCharacter].setState}
-//                             mapDragOffset={mapDrag}
-//                             ellipseRadius={stageHeight/2 - 50}
-
-//                             center={{
-//                                 centerLeft: {
-//                                     x: ellipseWidth/2 + mapDrag.x + 500 - 235,
-//                                     y: ellipseHeight/2 + mapDrag.y + 190},
-//                                 centerRight: {
-//                                     x: ellipseWidth/2 + mapDrag.x + 500 + 170,
-//                                     y: ellipseHeight/2 + mapDrag.y + 190},
-//                                 }}
-//                         />}
-//                     </Group>
-                    
-//             </Layer>
-//             <Layer><Circle x={ellipseWidth/2 + mapDrag.x + 500} y={ellipseHeight/2 + mapDrag.y + 250} radius={1} fillEnabled={true} fill={black}/></Layer>
-//         </Stage>
-//     )
-// }
