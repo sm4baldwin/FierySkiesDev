@@ -3,8 +3,9 @@ import {Stage, Layer} from 'react-konva'
 import { useMediaQuery } from '@material-ui/core'
 import {Grid, Paper} from '@material-ui/core'
 import {useTheme} from '@material-ui/core/styles'
-
 import {CharacterSelection} from '../Organisms/CharacterAnimation'
+import mediumScroll from '../../Assets/Other/papyrus_medium_scroll.png'
+import useDimensions from 'react-cool-dimensions'
 
 function ActiveCharacterProfile(props) {
     const [displayedCharacter, setDisplayedCharacter] = useState(0)
@@ -22,16 +23,18 @@ function ActiveCharacterProfile(props) {
             />
         } */}
 
-        {!props.selectedCharacter && <>
+        {/* {!props.selectedCharacter && <> */}
             <Grid container>
-                <Grid item><SelectionList
-                    characterList={props.characterList}
-                    selectedCharacter={props.selectedCharacter}
-                    setSelectedCharacter={props.setSelectedCharacter}
-                    displayedCharacter={displayedCharacter}
-                /></Grid>
+                <Grid item>
+                        <SelectionList
+                            characterList={props.characterList}
+                            selectedCharacter={props.selectedCharacter}
+                            setSelectedCharacter={props.setSelectedCharacter}
+                            displayedCharacter={displayedCharacter}
+                        />
+                </Grid>
             </Grid>
-        </>}
+        {/* </>} */}
         </>
     )
 }
@@ -40,10 +43,11 @@ function SelectionList(props) {
     const theme = useTheme()
     const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
     const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-
+    const { width, height, observe} = useDimensions()
+    console.log([width, height])
     return (
-        <div style={{width: '100%', height: '100%'}}>
-            <Stage width={smallMedia ? 300 : mediumMedia ? 350 : 400} height={smallMedia ? 200 : mediumMedia ? 320 : 400}>
+        <div style={{width: '100%', height: '100%', backgroundImage: `url(${mediumScroll})`, backgroundRepeat: 'no-repeat', backgroundSize: `${width*.9}px`, minWidth: '100px', minHeight: '100px'}} ref={observe}>
+            <Stage width={width} height={height}>
                 <Layer>
                     {
                             <CharacterSelection
@@ -53,6 +57,7 @@ function SelectionList(props) {
                                 selectedCharacter={props.selectedCharacter}
                                 spriteScale={smallMedia ? 0.8 : mediumMedia ? 0.9 : 1}
                                 font={smallMedia ? 10 : mediumMedia ? 12 : 14}
+                                stageWidth={width}
                             />
                     }
                 </Layer>

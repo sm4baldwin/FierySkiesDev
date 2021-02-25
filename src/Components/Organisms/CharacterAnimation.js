@@ -40,8 +40,8 @@ export const CharacterSelection = (props) => {
 
     return (
         <Group
-            x={props.characterState.sprite.selectionOffset + 5}
-            y={79}
+            x={(props.stageWidth - props.characterState.sprite.spriteWidth*props.characterState.sprite.scale*scale + props.characterState.sprite.selectionOffset*scale)/2}
+            y={0}
             draggable={false}
         >            
             <Sprite
