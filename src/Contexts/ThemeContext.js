@@ -1,8 +1,8 @@
-import {responsiveFontSizes, createMuiTheme} from '@material-ui/core/styles'
+import {createMuiTheme} from '@material-ui/core/styles'
 
 
 
-export const theme = responsiveFontSizes(createMuiTheme({
+export const theme = createMuiTheme({
     palette: {
       type: 'dark',
       primary: {
@@ -19,4 +19,4 @@ export const theme = responsiveFontSizes(createMuiTheme({
       'lg': 1200, 
       'xl': 1700
     }
-  }), {breakpoints: ['xs', 'sm', 'md', 'lg', 'xl'], factor: 3})
+  })

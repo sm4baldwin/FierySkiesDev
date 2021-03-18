@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import {Stage, Layer} from 'react-konva'
-import { useMediaQuery } from '@material-ui/core'
-import {Grid, Paper} from '@material-ui/core'
+import { useMediaQuery } from 'react-responsive'
+import {Grid} from '@material-ui/core'
 import {useTheme} from '@material-ui/core/styles'
 import {CharacterSelection} from '../Organisms/CharacterAnimation'
 import mediumScroll from '../../Assets/Other/papyrus_medium_scroll.png'
+import largeSidewaysScroll from '../../Assets/Other/papyrus_sideways_scroll.png'
 import useDimensions from 'react-cool-dimensions'
 
 function ActiveCharacterProfile(props) {
     const [displayedCharacter, setDisplayedCharacter] = useState(0)
-    const theme = useTheme()
-    const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
+    // const theme = useTheme()
+    // const smallMedia = useMediaQuery({ query: `(max-width: ${theme.breakpoints['sm']}px)` })
     // const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
     
@@ -24,8 +25,8 @@ function ActiveCharacterProfile(props) {
         } */}
 
         {/* {!props.selectedCharacter && <> */}
-            <Grid container>
-                <Grid item>
+            <Grid container direction='row' style={{backgroundImage: `url(${largeSidewaysScroll})`, backgroundRepeat: 'no-repeat', backgroundSize: '95%', height: '100%'}}>
+                <Grid item style={{margin: '15vh 0 0 15vw', border: '1px solid black', height: '115px', borderRadius: '10%'}}>
                         <SelectionList
                             characterList={props.characterList}
                             selectedCharacter={props.selectedCharacter}
@@ -41,13 +42,27 @@ function ActiveCharacterProfile(props) {
 
 function SelectionList(props) {
     const theme = useTheme()
-    const smallMedia = useMediaQuery(theme.breakpoints.down('xs'))
-    const mediumMedia = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-    const { width, height, observe} = useDimensions()
-    console.log([width, height])
+    let smallMedia = useMediaQuery({ query: `(max-width: ${theme.breakpoints['sm']}px)` })
+    let mediumMedia = useMediaQuery({ query: `(max-width: ${theme.breakpoints['md']}px)` }) && !smallMedia
+    let [papyrusWidth, setPapyrusWidth] = useState('80px')
+
+    useEffect(() => {
+        if (smallMedia) {
+            setPapyrusWidth('80')
+        } else if (mediumMedia) {
+            setPapyrusWidth('90')
+        } else {
+            setPapyrusWidth('100')
+        }
+    }, [smallMedia, mediumMedia])
+
     return (
-        <div style={{width: '100%', height: '100%', backgroundImage: `url(${mediumScroll})`, backgroundRepeat: 'no-repeat', backgroundSize: `${width*.9}px`, minWidth: '100px', minHeight: '100px'}} ref={observe}>
-            <Stage width={width} height={height}>
+        <div 
+        style={{
+            // backgroundImage: `url(${mediumScroll})`, backgroundRepeat: 'no-repeat', backgroundSize: `${papyrusWidth*.9}px`, 
+            width: `${papyrusWidth}px`, height: `${papyrusWidth}px`}}
+        >
+            <Stage width={papyrusWidth} height={papyrusWidth}>
                 <Layer>
                     {
                             <CharacterSelection
@@ -57,7 +72,7 @@ function SelectionList(props) {
                                 selectedCharacter={props.selectedCharacter}
                                 spriteScale={smallMedia ? 0.8 : mediumMedia ? 0.9 : 1}
                                 font={smallMedia ? 10 : mediumMedia ? 12 : 14}
-                                stageWidth={width}
+                                stageWidth={papyrusWidth}
                             />
                     }
                 </Layer>

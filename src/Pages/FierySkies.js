@@ -98,9 +98,9 @@ const InGameMenu = function(props) {
 
     return (
         <div style={{height: smallMedia ? '3%' : '5%', width: '100vw'}}>
-        {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color={'secondary'} >
+        {!menuHidden && <AppBar position="fixed" style={{bottom: '0', top: 'auto'}} color={'default'} >
             <Toolbar variant='dense'>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={(e) => {
+                <IconButton edge="start" color="black" aria-label="menu" onClick={(e) => {
                     e.preventDefault()
                     setMenuHidden(!menuHidden)
                 }}>

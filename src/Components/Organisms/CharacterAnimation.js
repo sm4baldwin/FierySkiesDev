@@ -93,13 +93,6 @@ export const CharacterSelection = (props) => {
                     props.setSelectedCharacter(props.characterState.name)
                 }}
             />
-            <Text 
-                text={`${props.characterState.name}`}
-                fontSize={smallMedia ? 10 : mediumMedia ? 12 : 14}
-                y={props.characterState.sprite.spriteHeight * props.characterState.sprite.scale * scale}
-                x={props.characterState.sprite.labelOffset * scale}
-                align={'center'}
-            />
         </Group>
     )
 }
